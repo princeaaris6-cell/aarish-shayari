@@ -1,0 +1,11 @@
+{
+  "name": "AARISH SHAYARI",
+  "short_name": "AARISH",
+  "description": "A collection of beautiful shayari",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#b8860b",
+  "orientation": "portrait"
+}
