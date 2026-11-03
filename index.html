@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AARISH SHAYARI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px;background:#15110a;border-bottom:2px solid #c9a044}
+h1{color:#e6bd60;letter-spacing:3px}
+header p{color:#c8b27f}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:15px}
+button{background:#bd963b;color:#111;border:0;padding:11px 14px;border-radius:20px;font-weight:bold}
+main{padding:12px;max-width:600px;margin:auto}
+h2{text-align:center;color:#e6bd60}
+.card{background:#171717;border:1px solid #82652b;border-radius:12px;padding:18px;margin:12px 0}
+.card p{text-align:center;font-size:19px;line-height:1.8;white-space:pre-line}
+.actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+input,textarea,select{width:100%;padding:13px;margin:8px 0;background:#222;color:white;border:1px solid #bd963b;border-radius:8px}
+footer{text-align:center;color:#c9a044;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>AARISH SHAYARI</h1>
+<p>Har Lafz Mein Ek Ehsaas ❤️</p>
+</header>
+
+<nav>
+<button onclick="show('All')">All</button>
+<button onclick="show('Love')">❤️ Love</button>
+<button onclick="show('Sad')">💔 Sad</button>
+<button onclick="show('Bewafa')">🥀 Bewafa</button>
+<button onclick="show('Islamic')">🕌 Islamic</button>
+<button onclick="show('My')">✍️ My Shayari</button>
+<button onclick="showFav()">⭐ Favourite</button>
+</nav>
+
+<main>
+<h2 id="heading">All Shayari</h2>
+<div id="list"></div>
+
+<h2>Apni Shayari Likhein ✍️</h2>
+<input id="author" placeholder="Aapka naam">
+
+<textarea id="newpoem" rows="4" placeholder="Apni shayari likhein..."></textarea>
+
+<select id="category">
+<option>Love</option>
+<option>Sad</option>
+<option>Bewafa</option>
+<option>Islamic</option>
+</select>
+
+<button onclick="addPoem()">Save Shayari</button>
+</main>
+
+<footer>Made with ❤️ by AARISH</footer>
+
+<script>
+let poems=[
+{cat:"Love",text:"Teri muskurahat meri pehchan ban gayi,\nTeri khushi meri jaan ban gayi."},
+{cat:"Sad",text:"Khamosh rehkar bhi bahut kuch keh diya,\nHumne apna dard khud hi seh liya."},
+{cat:"Bewafa",text:"Jise apna samjha wahi door ho gaya,\nDil ka har khwab majboor ho gaya."},
+{cat:"Islamic",text:"Allah par bharosa rakho mere dost,\nWoh har mushkil ko aasan kar sakta hai."}
+];
+
+let fav=[];
+
+function render(data){
+let list=document.getElementById("list");
+list.innerHTML="";
+
+data.forEach(p=>{
+let card=document.createElement("div");
+card.className="card";
+
+let title=document.createElement("h3");
+title.style.color="#e6bd60";
+title.textContent=p.cat+" Shayari";
+
+let para=document.createElement("p");
+para.textContent=p.text;
+
+let actions=document.createElement("div");
+actions.className="actions";
+
+let copy=document.createElement("button");
+copy.textContent="Copy";
+copy.onclick=()=>{
+navigator.clipboard.writeText(p.text)
+.then(()=>alert("Copied!"))
+.catch(()=>alert(p.text));
+};
+
+let share=document.createElement("button");
+share.textContent="Share";
+share.onclick=()=>{
+if(navigator.share){
+navigator.share({text:p.text});
+}else{
+copy.click();
+}
+};
+
+let heart=document.createElement("button");
+heart.textContent=fav.includes(p)?"❤️":"🤍";
+heart.onclick=()=>{
+if(fav.includes(p)){
+fav=fav.filter(x=>x!==p);
+}else{
+fav.push(p);
+}
+showFav();
+};
+
+actions.append(copy,share,heart);
+card.append(title,para,actions);
+list.append(card);
+});
+}
+
+function show(cat){
+document.getElementById("heading").textContent=cat+" Shayari";
+
+if(cat==="All"){
+render(poems);
+}else if(cat==="My"){
+render(poems.filter(p=>p.author));
+}else{
+render(poems.filter(p=>p.cat===cat));
+}
+}
+
+function showFav(){
+document.getElementById("heading").textContent="Favourite Shayari";
+render(fav);
+}
+
+function addPoem(){
+let text=document.getElementById("newpoem").value.trim();
+
+if(!text){
+alert("Pehle shayari likhein!");
+return;
+}
+
+poems.push({
+cat:document.getElementById("category").value,
+text:text,
+author:document.getElementById("author").value
+});
+
+document.getElementById("newpoem").value="";
+show("All");
+alert("Shayari add ho gayi!");
+}
+
+show("All");
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav>
+<button onclick="show('All')">All</button>
+<button onclick="show('Love')">❤️ Love</button>
+<button onclick="show('Sad')">💔 Sad</button>
+<button onclick="show('Bewafa')">🥀 Bewafa</button>
+<button onclick="show('Islamic')">🕌 Islamic</button>
+<button onclick="showFav()">⭐ Favourite</button>
+</nav>
+
+<main>
+<h2 id="heading">All Shayari</h2>
+<div id="list"></div>
+
+<h2>Apni Shayari Likhein ✍️</h2>
+<input id="author" placeholder="Aapka naam">
+<textarea id="newpoem" rows="4" placeholder="Apni shayari likhein"></textarea>
+<select id="category">
+<option>Love</option>
+<option>Sad</option>
+<option>Bewafa</option>
+<option>Islamic</option>
+</select>
+<button onclick="addPoem()">Save Shayari</button>
+</main>
+
+<footer>Made with ❤️ by AARISH</footer>
+
+<script>
+let poems=[
+{cat:"Love",text:"Teri muskurahat meri pehchan ban gayi,\nTeri khushi meri jaan ban gayi."},
+{cat:"Sad",text:"Khamosh rehkar bhi bahut kuch keh diya,\nHumne apna dard khud hi seh liya."},
+{cat:"Bewafa",text:"Jise apna samjha wahi door ho gaya,\nDil ka har khwab majboor ho gaya."},
+{cat:"Islamic",text:"Allah par bharosa rakho mere dost,\nWoh har mushkil ko aasan kar sakta hai."}
+];
+
+let fav=[];
+
+function render(data){
+let list=document.getElementById("list");
+list.innerHTML="";
+
+data.forEach(p=>{
+let card=document.createElement("div");
+card.className="card";
+
+let title=document.createElement("h3");
+title.style.color="#e8c36c";
+title.textContent=p.cat+" Shayari";
+
+let para=document.createElement("p");
+para.textContent=p.text;
+
+let actions=document.createElement("div");
+actions.className="actions";
+
+let copy=document.createElement("button");
+copy.textContent="Copy";
+copy.onclick=()=>{
+navigator.clipboard.writeText(p.text)
+.then(()=>alert("Shayari copied!"))
+.catch(()=>alert(p.text));
+};
+
+let share=document.createElement("button");
+share.textContent="Share";
+share.onclick=()=>{
+if(navigator.share){
+navigator.share({text:p.text});
+}else{
+copy.click();
+}
+};
+
+let heart=document.createElement("button");
+heart.textContent=fav.includes(p)?"❤️":"🤍";
+heart.onclick=()=>{
+if(fav.includes(p)){
+fav=fav.filter(x=>x!==p);
+}else{
+fav.push(p);
+}
+showFav();
+};
+
+actions.append(copy,share,heart);
+card.append(title,para,actions);
+list.append(card);
+});
+}
+
+function show(cat){
+document.getElementById("heading").textContent=cat+" Shayari";
+render(cat==="All"?poems:poems.filter(p=>p.cat===cat));
+}
+
+function showFav(){
+document.getElementById("heading").textContent="Favourite Shayari";
+render(fav);
+}
+
+function addPoem(){
+let text=document.getElementById("newpoem").value.trim();
+if(!text){
+alert("Pehle shayari likhein!");
+return;
+}
+
+poems.push({
+cat:document.getElementById("category").value,
+text:text,
+author:document.getElementById("author").value
+});
+
+document.getElementById("newpoem").value="";
+show("All");
+alert("Shayari add ho gayi!");
+}
+
+show("All");
+</script>
+</body>
+</html>
+
